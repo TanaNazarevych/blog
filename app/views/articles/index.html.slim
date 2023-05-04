@@ -1,0 +1,49 @@
+div.navbar.navbar-expand.mt-1.bg-primary.bg-opacity-10
+    div.container-fluid
+        div.d-flex.gap-5
+            h2 Articles
+
+            = form_tag(articles_path, method: :get, class: "d-flex") do
+                = text_field_tag(:search, params[:search], class: "form-control string requred me-1", placeholder: "Search")
+                = button_tag("Search", class: "btn btn-outline-primary")
+                    
+
+
+   
+        = form_tag(articles_path, method: :get, class: "d-flex ") do
+            = select_tag "category", options_for_select(@categories,selected: params[:category]), onchange: 'this.form.submit()', class: "btn btn-outline-primary dropdown-toggle"
+
+        = link_to "Sign in", new_user_registration_path
+    
+            
+.table.shadow.mb-3.mt-3.bg-light
+    table.table.table-hover.table-bordered.table-rounded 
+        thead.thead.bg-primary.bg-opacity-10
+            tr
+                th Title
+                th Text
+                th Category
+                th Tags
+                th
+                th
+                th
+        tbody    
+            - @articles.each do |article|
+                tr
+                    td= article.title
+                    td= article.text
+                    td= article.category.title
+                    td= article.tags_as_string
+                    td
+                        = link_to "Show this article", article
+                    td
+                        = link_to 'Edit', edit_article_path(article)
+                    td
+                        = link_to 'Delete', article, method: :delete, data: { confirm: 'Are you sure?'} 
+
+div.d-flex.justify-content-end
+    = paginate @articles 
+div.d-flex.justify-content-end
+    = link_to "New article", new_article_path, class: "btn btn-primary"
+
+

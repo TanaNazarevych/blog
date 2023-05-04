@@ -1,0 +1,9 @@
+.d-flex.justify-content-evenly.mt-5
+    .card.shadow.bg-light
+        .card-header.bg-primary.bg-opacity-10
+            h2.card-title.
+                | Editing article
+        .d-flex.justify-content-evenly.mb-8
+            .card-body
+                = render "article", article: @article 
+                    

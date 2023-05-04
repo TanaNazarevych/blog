@@ -1,0 +1,25 @@
+.d-flex.flex-column.justify-content-evenly.mt-5
+            .d-flex.flex-row.justify-content-evenly
+                .d-flex.flex-column.w-50
+                    <p style="color: green" id="notice">
+                        = notice     
+                    .d-flex.flex-column.grid.gap-3
+                        h1
+                            =@article.title
+                        
+                        div   
+                            strong Tags:
+                            =@article.tags_as_string
+
+                        divs
+                            strong Text:
+                            =@article.text
+
+                div.mt-4
+                    =image_tag(@article.image_url(:thumb)) if @article.image.present?
+
+.d-flex.flex-row.grid.gap-2.justify-content-center.mt-5
+        = link_to 'Edit', edit_article_path(@article), class: "btn btn-primary"
+        = link_to 'Back ', articles_path, class: "btn btn-outline-primary"
+
+
