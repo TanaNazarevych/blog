@@ -66,8 +66,16 @@ gem "mini_magick"
 
 gem 'devise'
 
-gem 'letter_opener'
+gem "letter_opener", group: :development
+gem 'letter_opener_web'
 
+gem 'faker' 
+
+gem "breadcrumbs_on_rails"
+
+gem 'friendly_id', '~> 5.4.0'
+
+# gem 'html2slim', '~> 0.2.0'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

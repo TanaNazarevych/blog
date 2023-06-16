@@ -11,4 +11,13 @@
     Category.find_or_create_by(title: c)
 end
 
+require 'faker'
+100.times.each_with_index do |index|
+    Article.create!(
+        title: "#{index}-#{Faker::Book.title}",   
+        text: Faker::Lorem.paragraph,
+        category:  Category.all.sample
+    )
+    
 
+end

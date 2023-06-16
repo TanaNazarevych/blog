@@ -1,5 +1,11 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: %i[ show edit update destroy ]
+  
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+
+  # add_breadcrumb "home", :home_path
+  # add_breadcrumb "articles", :article_path
+
 
   # GET /articles or /articles.json
   def index
@@ -15,6 +21,8 @@ class ArticlesController < ApplicationController
 
     @categories = Category.all.map { |category| [category.title, category.id] }
     @categories.prepend(["All categories", ""])
+
+    # add_breadcrumb "index", articles_path, title: "Back to  Articles"
 
     #@categories = Category.search_by_category(params[:search  ]) if params[:search].present?
 
@@ -72,10 +80,11 @@ def create
 
   # DELETE /articles/1 or /articles/1.json
   def destroy
+    # @article = Article.destroy(params[:id])
     @article.destroy
 
     respond_to do |format|
-      format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
+      format.html { redirect_to articles_url, notice: "Article was successfully deleted." }
       format.json { head :no_content }
     end
   end
@@ -84,7 +93,9 @@ def create
   
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find(params[:id])
+      @article = Article.friendly.find(params[:id])
+      
+      
      
       
     end

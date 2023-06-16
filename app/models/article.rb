@@ -1,4 +1,6 @@
 class Article < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: :slugged
 
   include PgSearch::Model
   # pg_search_scope :search_by_multiple, against: [:title, :text, :category_title, :tags]
@@ -15,6 +17,8 @@ class Article < ApplicationRecord
   # pg_search_scope :search_by_multiple, against: [:title, :text:], associated_against: {
   #   category: :title
   # }
+  paginates_per 25
+  
   mount_uploader :image, AvatarUploader
 
   has_many :taggings, as: :taggable
@@ -26,7 +30,6 @@ class Article < ApplicationRecord
   validates :text, presence: true, length: { in: 10..10000, too_long: "%{count} characters maximum allowed"}
   
   has_rich_text :text
-  
 
   # def self.search_multiple(query)
   #   #debugger

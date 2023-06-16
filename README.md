@@ -53,7 +53,7 @@ markdown for editor
 To-do
 
 - Make home page
-- Make article clickable 
-- Fix delete section
+- Make article clickable  
+- Fix delete section 
 - html save
 
