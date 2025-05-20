@@ -1,45 +1,46 @@
 class ArticlesController < ApplicationController
   
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:edit, :update, :destroy, :show]
   before_action :authenticate_user!
-
-  # add_breadcrumb "home", :home_path
-  # add_breadcrumb "articles", :article_path
-
+ 
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.order(:title).page(params[:page])
+  @articles = Article.order(:title).page(params[:page])
 
-    @articles = @articles.search_by_article(params[:search]) if params[:search].present?
-    
-    @articles = @articles.tagged_with(params[:tag]) if params[:tag]
+  # Apply filters
+  @articles = @articles.search_by_article(params[:search]) if params[:search].present?
+  @articles = @articles.tagged_with(params[:tag]) if params[:tag].present?
+  @articles = @articles.search_by_category(params[:category]) if params[:category].present?
 
-    @articles = @articles.search_by_category(params[:category]) if params[:category].present?
-    
-    # @articles = @articles.search_by_category_id(params[:category_id])
+  # Load all categories and prepend the "All categories" option
+  @categories = Category.all.map { |category| [category.title, category.id] }
+  @categories.prepend(["All categories", ""])
+end
 
-    @categories = Category.all.map { |category| [category.title, category.id] }
-    @categories.prepend(["All categories", ""])
 
-    # add_breadcrumb "index", articles_path, title: "Back to  Articles"
-
-    #@categories = Category.search_by_category(params[:search  ]) if params[:search].present?
-
-    # @tag = Tag.all
-  end
 
   # GET /articles/1 or /articles/1.json
   def show
+    # @article = Article.new(article_params)
+    
+      @user = User.find(@article.user_id)
+      @comments = @article.comments
+      @comment = Comment.new
+      @comment.article_id = @article.id
+      add_breadcrumb "Back to articles", :articles_path, class: "link-dark"
+
   end
 
   # GET /articles/new
   def new
     @article = Article.new
+    add_breadcrumb "Back to articles", :articles_path, class: "link-dark"
   end
 
   # GET /articles/1/edit
   def edit
+    
   end
 
   # POST /articles or /articles.json
@@ -52,6 +53,11 @@ class ArticlesController < ApplicationController
   #  debugger
 def create
   @article = Article.new(article_params)
+  # @article.picture.attach(params[:article][:picture])
+  # @article.user_id = @user.id
+  # @article.image.attach(params[:article][:image])
+  # uploader = imageUploader.new
+  # uploader.store!(my_file)
 
     respond_to do |format|
       if @article.save
@@ -66,7 +72,6 @@ def create
 
   # PATCH/PUT /articles/1 or /articles/1.json
   def update
-   
     respond_to do |format|
       if @article.update(article_params)
         format.html { redirect_to article_url(@article), notice: "Article was successfully updated." }
@@ -82,7 +87,6 @@ def create
   def destroy
     # @article = Article.destroy(params[:id])
     @article.destroy
-
     respond_to do |format|
       format.html { redirect_to articles_url, notice: "Article was successfully deleted." }
       format.json { head :no_content }
@@ -93,18 +97,18 @@ def create
   
     # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.friendly.find(params[:id])
-      
-      
-     
-      
+      @article = Article.friendly.find(params[:id])  
     end
 
-    # Only allow a list of trusted parameters through.
+
     def article_params
       params.fetch(:article, {})
-      params.require(:article).permit(:title, :text, :category_id, :tags_as_string, :image, :search)
+      params.require(:article).permit(:title, :text, :search, :category_id, :image, :tags_as_string)
+            .merge(user: current_user)
     end
+    
+ 
+    
   end
 
  

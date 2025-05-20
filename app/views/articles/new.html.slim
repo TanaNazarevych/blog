@@ -1,18 +1,12 @@
-= simple_form_for @article do |f|
-    .d-flex.justify-content-evenly.mt-5
-        .card.shadow.bg-light
-            .card-header.bg-primary.bg-opacity-10
-                h2.card-title
-                 | New article
-            .d-flex.justify-content-evenly.mb-8
-                .d-flex.flex-column.mb-8
-                    .card-body
-                        = render "article", article: @article 
-                
+div.d-flex.flex-wrap.justify-content-center
+    = simple_form_for @article do |f|
+        div.h3.mt-3.mb-5.d-flex.justify-content-center
+            | Create your perfect Article!
+        div.input-group.mb-3           
+            = render "article", article: @article 
+            
                         
-                       
+                                
+                        
+                                
                             
-                            
-
-
-

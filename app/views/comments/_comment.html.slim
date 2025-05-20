@@ -1,0 +1,18 @@
+= simple_form_for [@comment] do |f|
+    strong 
+        | Add comment
+    .d-flex.flex-row
+        = f.text_field :body, class: "form-control"
+        = f.submit "Reply" , class: "btn btn-dark"
+        = f.hidden_field :article_id, :value => @article.slug
+
+
+
+/ = form_with model: [ @article.comments.build] do |f|
+/     strong 
+/         | Add comment
+/     div.d-flex.flex-row
+/         = f.text_field :body, class: "form-control"
+/         = f.submit "Reply" , class: "btn btn-dark"
+/         = f.hidden_field :article_id, :value => @article.id
+

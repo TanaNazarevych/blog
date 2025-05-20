@@ -1,0 +1,14 @@
+strong
+    | Comments:
+    =@article.comments.size
+- if @article.comments.try(:any?)
+  - @article.comments.each do |comment|
+    div.d-flex.flex-column.m-2
+        div
+            = comment.body
+        small
+            = comment.user.email
+        = link_to "Destroy this comment", article_path(@article, comment), method: :delete, class: "link-dark", form: { data: { turbo_confirm: "Are you sure?" } }
+- else
+  div
+    | No comments found.

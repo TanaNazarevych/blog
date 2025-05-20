@@ -26,6 +26,11 @@ class HomeController < ApplicationController
   # GET /articles/1 or /articles/1.json
   def show
     @article = Article.friendly.find(params[:id])
+    @user = User.find(@article.user_id)
+    @comments = @article.comments
+    @comment = Comment.new
+    @comment.article_id = @article.id
+    add_breadcrumb "Back to articles", :articles_path, class: "link-dark"
   end
 
 end

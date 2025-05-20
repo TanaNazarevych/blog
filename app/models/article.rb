@@ -1,9 +1,13 @@
 class Article < ApplicationRecord
+  belongs_to :user
+
+  mount_uploader :image, ImageUploader
+  
   extend FriendlyId
   friendly_id :title, use: :slugged
 
   include PgSearch::Model
-  # pg_search_scope :search_by_multiple, against: [:title, :text, :category_title, :tags]
+
   pg_search_scope :search_by_article, against: [:title, :text]
   
   pg_search_scope :search_by_category, associated_against: { 
@@ -13,13 +17,13 @@ class Article < ApplicationRecord
   def self.search_by_category(id)
     where(category_id: id)
   end
+
+  def user_email
+    user.email if user
+  end
   
-  # pg_search_scope :search_by_multiple, against: [:title, :text:], associated_against: {
-  #   category: :title
-  # }
+
   paginates_per 25
-  
-  mount_uploader :image, AvatarUploader
 
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings, class_name: 'Gutentag::Tag'
@@ -31,13 +35,12 @@ class Article < ApplicationRecord
   
   has_rich_text :text
 
-  # def self.search_multiple(query)
-  #   #debugger
-  #   first = where("TITLE like :search OR TEXT like :search", search: query.to_s)
-  #   second = joins(:category).where(category: { title: query.to_s })
-  #   third = joins(:tags).where(tags: { name: query.to_s })
-  #   [first, second, third].flatten.uniq
-  # end
+  has_many :comments, dependent: :destroy
+
+
+  
+
+
 
   Gutentag::ActiveRecord.call self
   
@@ -48,15 +51,9 @@ class Article < ApplicationRecord
   def tags_as_string=(string)
     self.tag_names = string.split(/,\s*/)
   end
+
+  
 end
 
    
-    # Article.tagged_with(:names => ['tag1', 'tag2'], :match => :any)
-    # Article.tagged_with(
-    # :tags  => Gutentag::Tag.where(name: ['tag1', 'tag2']),
-    # :match => :any
-    # )
-    #  Article.tagged_with(:ids => [:tag_id], :match => :any)
-
-      
-
+  

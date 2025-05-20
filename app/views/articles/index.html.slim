@@ -1,53 +1,47 @@
-<p style="color: green" id="notice">
-    = notice   
-div.navbar.navbar-expand.bg-primary.bg-opacity-10
-    div.container-fluid
-        div.d-flex.gap-5
-            h2 
-                = link_to "Article", new_article_path, class: "link-dark"
-
-            = form_tag(articles_path, method: :get, class: "d-flex") do
-                = text_field_tag(:search, params[:search], class: "form-control string requred me-1", placeholder: "Search")
-                = button_tag("Search", class: "btn btn-outline-primary")
-                    
-
-
-        div.d-flex.gap-5
-            = form_tag(articles_path, method: :get) do
-                = select_tag "category", options_for_select(@categories,selected: params[:category]), onchange: 'this.form.submit()', class: "btn btn-outline-primary dropdown-toggle"
-           
-            = render partial: "layouts/nav"
-            
-.table.shadow.mb-3.mt-3.bg-light
-    table.table.table-hover.table-bordered.table-rounded 
-        thead.thead.bg-primary.bg-opacity-10
-            tr
-                th Title
-                th Text
-                th Category
-                th Tags
-                th
-                th
+div.container.column
+    div.d-flex.justify-content-between.me-2.ms-2.mt-4
+        = form_tag(articles_path, style: "width: 70%",  method: :get, class: "d-flex input-group") do
+            = text_field_tag(:search, params[:search], class: "form-control string requred ", placeholder: "Search for the article ... ")
+                        
+            = button_tag("🔍", class: "input-group-text")
                 
-        tbody    
-            - @articles.each do |article|
-                tr
-                    td
-                        = link_to article.title, article, :title => article.title
-                    td
-                        = article.text
-                    td
+        = form_tag(articles_path, method: :get) do
+            = select_tag "category", options_for_select(@categories,selected: params[:category]), onchange: 'this.form.submit()', class: "btn btn-outline-dark dropdown-toggle"
+        
+        = link_to "New article", new_article_path, class: "btn btn-dark"
+
+
+    div.d-flex.justify-content-start.mt-5.ms-2
+        h4
+            | All Articles
+
+    <p style="color: green" id="notice">
+        = notice
+    .article-container.d-flex.align-items-center.flex-wrap.justify-content-evenly 
+        - @articles.each do |article| 
+            div.card.m-2 style="width: 400px; min-height: 200px" 
+                div.card-body
+                    h4.card-title.p-1
+                            = link_to article.title, article, :title => article.title, class: "link-dark"
+                    h6.card-subtitle 
                         = article.category.title
-                    td
+                    card-text
+                        = article.text
+                    div.badge.text-bg-dark.p-1
                         = article.tags_as_string
-                    td
-                        = link_to 'Edit', edit_article_path(article)
-                    td
-                        = link_to 'Delete', article, method: :delete, data: { confirm: 'Are you sure?'} 
+                    .d-flex.flex-row.grid.gap-2.pt-3
+                        div 
+                            = link_to 'Edit', edit_article_path(article),class: "link-dark"
+                        div 
+                            | /
+                        div
+                            = link_to 'Delete', article, method: :delete, data: { confirm: 'Are you sure?'},class: "link-dark"
+
+                     
+
 
 div.d-flex.justify-content-end
     = paginate @articles 
-div.d-flex.justify-content-end
-    = link_to "New article", new_article_path, class: "btn btn-primary"
+
 
 

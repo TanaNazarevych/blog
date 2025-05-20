@@ -1,4 +1,40 @@
 
+.pagination > li > a
+{
+    background-color: white;
+    color: #212529;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #212529;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #212529;
+    border: solid 1px #212529;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #212529;
+    border: solid 1px #212529;
+}
+
+
+
 @import "bootstrap";
 
-@import "./actiontext.css"
+@import "./actiontext.css";
+
+@import "bootstrap-icons/font/bootstrap-icons";
+
+
+

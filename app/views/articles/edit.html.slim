@@ -1,9 +1,9 @@
-.d-flex.justify-content-evenly.mt-5
-    .card.shadow.bg-light
-        .card-header.bg-primary.bg-opacity-10
-            h2.card-title.
-                | Editing article
-        .d-flex.justify-content-evenly.mb-8
-            .card-body
-                = render "article", article: @article 
+div.d-flex.flex-wrap.justify-content-center
+    div.h3.mt-3.mb-5.d-flex.justify-content-center
+        | Editing article
+    div.input-group.mb-3           
+    = render "article", article: @article 
+    
+                        
+                  
                     
