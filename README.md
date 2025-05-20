@@ -1,59 +1,60 @@
-# README
+# 📝 Blog of Vito
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A full-stack Ruby on Rails blog platform built as part of my **software engineering internship at Sentia Australia**.  
+Blog of Vito supports user authentication, image uploads, nested comments, and a clean content-driven UI — ideal for portfolio showcasing and editorial use cases.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 🌟 Features
 
-* System dependencies
+-  Devise authentication (user login, registration, email confirmation)
+-  Articles with rich content and optional images
+-  Nested commenting system (one level deep)
+-  Image upload via CarrierWave
+-  Admin support for managing articles
+-  Slim templating and responsive layout
+-  Test coverage using built-in Rails test framework
 
-* Configuration
+---
 
-* Database creation
+## 🛠 Tech Stack
 
-* Database initialization
+| Tool           | Description                                  |
+|----------------|----------------------------------------------|
+| Ruby 3.1.2      | Language used for backend logic              |
+| Rails 7.x       | MVC framework powering the app               |
+| Devise          | Authentication and user management           |
+| CarrierWave     | Image uploader for articles                  |
+| SQLite3         | Default local database                       |
+| Slim            | Lightweight view templating                  |
+| Bootstrap       | Styling and responsive layout                |
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## 🚀 Getting Started (Local Setup)
 
-* Deployment instructions
+> **Ruby 3.1.2 is required** to run this project. You can install it via `rvm` or `rbenv`.
 
-* ...
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/TanaNazarevych/blog.git
+cd blog
+
+### 2. Install dependencies
+bundle install
+yarn install # if using Rails 7 with Webpacker or jsbundling-rails
 
 
-# TODO
+### 3. Set up the database
+rails db:create
+rails db:migrate
+rails db:seed #  seeds were provided by Sentia Austalia
 
-Validations
-- required fields
-- length
 
-Simple_form + Bootstrap
-slim for views
+### 4. Run the server
+rails server
+Then go to http://localhost:3000 in your browser
 
-## Homework 31 March
 
-### Tags
-- Implement tags on articles
-- Add tags column to article index view
-- Show tags on article show page
-- Add and remove tags from articles
-- search articles by tags
-- Add default tags to seeds
-
-### File Upload
-- Implement 'carrierwave' gem to upload files
-- attach files to articles
-
-PG Search
-markdown for editor
-
-To-do
-
-- Make home page
-- Make article clickable  
-- Fix delete section 
-- html save
 
